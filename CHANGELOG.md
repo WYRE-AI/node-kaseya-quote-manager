@@ -1,3 +1,10 @@
+# 1.0.0 (2026-05-26)
+
+
+### Features
+
+* initial Kaseya Quote Manager (Datto Commerce) API client ([af27057](https://github.com/wyre-technology/node-kaseya-quote-manager/commit/af27057779fb5d8c185d3511bd6df34229842208))
+
 # Changelog
 
 All notable changes to this project will be documented in this file.
