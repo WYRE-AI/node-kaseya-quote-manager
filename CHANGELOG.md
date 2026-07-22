@@ -1,3 +1,10 @@
+## [1.0.1](https://github.com/wyre-technology/node-kaseya-quote-manager/compare/v1.0.0...v1.0.1) (2026-07-22)
+
+
+### Bug Fixes
+
+* **deps:** re-pin typescript to ^6.0.3 + ignoreDeprecations for TS7 DTS build breakage ([#7](https://github.com/wyre-technology/node-kaseya-quote-manager/issues/7)) ([459f6a8](https://github.com/wyre-technology/node-kaseya-quote-manager/commit/459f6a829f772d7fb325d49e6a4de378cb78b2c4)), closes [blackpoint-mcp#44](https://github.com/blackpoint-mcp/issues/44)
+
 # 1.0.0 (2026-05-26)
 
 
