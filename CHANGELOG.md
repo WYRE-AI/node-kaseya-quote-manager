@@ -1,3 +1,10 @@
+## [1.0.2](https://github.com/wyre-technology/node-kaseya-quote-manager/compare/v1.0.1...v1.0.2) (2026-08-13)
+
+
+### Bug Fixes
+
+* **deps:** re-pin typescript to ^6.0.3, main is broken on 7.0.2 (again) ([#10](https://github.com/wyre-technology/node-kaseya-quote-manager/issues/10)) ([904cb4f](https://github.com/wyre-technology/node-kaseya-quote-manager/commit/904cb4f9ad3d3f866d98b4f1b04dec0b20e3c324)), closes [#9](https://github.com/wyre-technology/node-kaseya-quote-manager/issues/9) [#7](https://github.com/wyre-technology/node-kaseya-quote-manager/issues/7) [#7](https://github.com/wyre-technology/node-kaseya-quote-manager/issues/7) [#9](https://github.com/wyre-technology/node-kaseya-quote-manager/issues/9)
+
 ## [1.0.1](https://github.com/wyre-technology/node-kaseya-quote-manager/compare/v1.0.0...v1.0.1) (2026-07-22)
 
 
