@@ -1,3 +1,10 @@
+## [1.0.3](https://github.com/WYRE-AI/node-kaseya-quote-manager/compare/v1.0.2...v1.0.3) (2026-08-25)
+
+
+### Bug Fixes
+
+* migrate to WYRE-AI org (npm scope, ghcr namespace, registry) ([#13](https://github.com/WYRE-AI/node-kaseya-quote-manager/issues/13)) ([fb0c134](https://github.com/WYRE-AI/node-kaseya-quote-manager/commit/fb0c13453afeb5d2272fa13920b2d1564699bdcd))
+
 ## [1.0.2](https://github.com/wyre-technology/node-kaseya-quote-manager/compare/v1.0.1...v1.0.2) (2026-08-13)
 
 
