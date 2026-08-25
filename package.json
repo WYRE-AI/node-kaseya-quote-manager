@@ -1,5 +1,5 @@
 {
-  "name": "@wyre-technology/node-kaseya-quote-manager",
+  "name": "@wyre-ai/node-kaseya-quote-manager",
   "version": "1.0.2",
   "description": "Node.js/TypeScript client library for the Kaseya Quote Manager (Datto Commerce) API",
   "type": "module",
