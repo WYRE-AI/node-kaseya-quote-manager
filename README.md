@@ -1,4 +1,4 @@
-# @wyre-technology/node-kaseya-quote-manager
+# @wyre-ai/node-kaseya-quote-manager
 
 Node.js/TypeScript client library for the [Kaseya Quote Manager](https://help.quotemanager.kaseya.com/) (Datto Commerce) API.
 
@@ -8,18 +8,18 @@ documented resource, with built-in retry, a client-side rate limiter, and typed 
 ## Install
 
 ```bash
-npm install @wyre-technology/node-kaseya-quote-manager
+npm install @wyre-ai/node-kaseya-quote-manager
 ```
 
 > Published to GitHub Packages. Configure your `.npmrc`:
 > ```
-> @wyre-technology:registry=https://npm.pkg.github.com
+> @wyre-ai:registry=https://npm.pkg.github.com
 > ```
 
 ## Quick start
 
 ```ts
-import { KaseyaQuoteManagerClient } from '@wyre-technology/node-kaseya-quote-manager';
+import { KaseyaQuoteManagerClient } from '@wyre-ai/node-kaseya-quote-manager';
 
 const client = new KaseyaQuoteManagerClient({
   apiKey: process.env.KASEYA_QUOTE_MANAGER_API_KEY!,
@@ -84,7 +84,7 @@ backoff (`maxRetries`, default 3).
 All errors extend `KaseyaQuoteManagerError` (`statusCode`, `response`):
 
 ```ts
-import { NotFoundError, RateLimitError } from '@wyre-technology/node-kaseya-quote-manager';
+import { NotFoundError, RateLimitError } from '@wyre-ai/node-kaseya-quote-manager';
 
 try {
   await client.quotes.get(999999);
