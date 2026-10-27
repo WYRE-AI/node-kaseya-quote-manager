@@ -124,7 +124,6 @@ Also:
   `pageSize`, narrower filters, or raise `maxResponseBytes`.
 - A network failure or timeout after all retries throws a `KaseyaQuoteManagerError` with `statusCode` 0.
   The underlying error is available as `cause`.
-
 - A `200` that says it is JSON but does not parse throws a `KaseyaQuoteManagerError` that does not echo the body.
 - Redirects are never followed (following one would resend the `apiKey` header to another host). A `3xx` throws.
 

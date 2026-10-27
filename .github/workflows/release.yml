@@ -1,6 +1,6 @@
 name: Release
 
-# Release is manual-only: run it from the Actions tab after Aaron approves a publish.
+# Release is manual-only: run it from the Actions tab.
 on:
   workflow_dispatch:
 

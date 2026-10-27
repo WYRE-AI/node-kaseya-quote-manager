@@ -50,7 +50,7 @@ export class InvalidIdError extends KaseyaQuoteManagerError {
 export class ResponseTooLargeError extends KaseyaQuoteManagerError {
   constructor(cap: number, statusCode: number) {
     super(
-      `Quote Manager sent a response larger than ${cap} bytes, so it was not read. Ask for a smaller page (pageSize) or narrower filters, or raise maxResponseBytes.`,
+      `Quote Manager sent a response larger than ${cap} bytes, so it was not read. Narrow the request with a smaller pageSize or filters, or raise maxResponseBytes.`,
       statusCode,
       undefined,
     );

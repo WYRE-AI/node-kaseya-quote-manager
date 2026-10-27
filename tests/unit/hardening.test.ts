@@ -53,7 +53,7 @@ describe('response size cap', () => {
     const err = await client.request('/v1/quote').catch(e => e);
     expect(err).toBeInstanceOf(ResponseTooLargeError);
     expect(err.message).toBe(
-      'Quote Manager sent a response larger than 100 bytes, so it was not read. Ask for a smaller page (pageSize) or narrower filters, or raise maxResponseBytes.',
+      'Quote Manager sent a response larger than 100 bytes, so it was not read. Narrow the request with a smaller pageSize or filters, or raise maxResponseBytes.',
     );
     expect(err.statusCode).toBe(200);
     expect(err.response).toBeUndefined();
@@ -194,7 +194,9 @@ describe('retries', () => {
       }),
     );
     const { client } = makeHttp({ maxRetries: 2 });
-    await expect(client.request('/v1/quote')).rejects.toBeInstanceOf(ServerError);
+    const err = await client.request('/v1/quote').catch(e => e);
+    expect(err).toBeInstanceOf(ServerError);
+    expect(err.message).toBe('Quote Manager had a server error (HTTP 500). Try again later.');
     expect(count).toBe(3);
   });
 
@@ -253,7 +255,7 @@ describe('retries', () => {
     const { client } = makeHttp({ maxRetries: 0 });
     const err = await client.request('/v1/quote').catch(e => e);
     expect(err).toBeInstanceOf(RateLimitError);
-    expect(err.message).toBe('Quote Manager rate limit reached (60 requests a minute, 10,000 a day). Wait and try again.');
+    expect(err.message).toBe('Quote Manager is rate limiting requests (60 a minute, 10,000 a day per API key). Wait a minute and try again. If it keeps happening, the daily limit may be used up.');
     expect(err.retryAfter).toBe(60);
 
     server.use(http.get(`${BASE}/v1/quote`, () => new HttpResponse(null, { status: 429 })));

@@ -162,7 +162,7 @@ export class HttpClient {
             continue;
           }
           throw new RateLimitError(
-            'Quote Manager rate limit reached (60 requests a minute, 10,000 a day). Wait and try again.',
+            'Quote Manager is rate limiting requests (60 a minute, 10,000 a day per API key). Wait a minute and try again. If it keeps happening, the daily limit may be used up.',
             wait ?? 60,
             responseBody,
           );
@@ -173,7 +173,7 @@ export class HttpClient {
               await this.sleep(backoffMs(attempt));
               continue;
             }
-            throw new ServerError(`Server error: ${response.status}`, responseBody);
+            throw new ServerError(`Quote Manager had a server error (HTTP ${response.status}). Try again later.`, responseBody);
           }
           throw new KaseyaQuoteManagerError(`HTTP ${response.status}`, response.status, responseBody);
       }
