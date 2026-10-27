@@ -1,4 +1,4 @@
-import type { HttpClient } from '../http.js';
+import { pathId, type HttpClient } from '../http.js';
 import type { ContactModel, ContactListParams } from '../types/index.js';
 
 export class ContactResource {
@@ -11,6 +11,6 @@ export class ContactResource {
 
   /** Get a single Contact by ID. */
   async get(id: number): Promise<ContactModel> {
-    return this.http.request<ContactModel>(`/v1/contact/${id}`);
+    return this.http.request<ContactModel>(`/v1/contact/${pathId(id)}`);
   }
 }

@@ -1,6 +1,6 @@
 export class KaseyaQuoteManagerError extends Error {
-  constructor(message: string, public statusCode: number, public response: unknown) {
-    super(message);
+  constructor(message: string, public statusCode: number, public response: unknown, options?: { cause?: unknown }) {
+    super(message, options);
     Object.setPrototypeOf(this, new.target.prototype);
   }
 }
@@ -38,5 +38,21 @@ export class RateLimitError extends KaseyaQuoteManagerError {
 export class ServerError extends KaseyaQuoteManagerError {
   constructor(message: string, response: unknown) {
     super(message, 500, response);
+  }
+}
+
+export class InvalidIdError extends KaseyaQuoteManagerError {
+  constructor() {
+    super('Invalid id. Use a positive whole-number ID from a list or get call.', 0, undefined);
+  }
+}
+
+export class ResponseTooLargeError extends KaseyaQuoteManagerError {
+  constructor(cap: number, statusCode: number) {
+    super(
+      `Quote Manager sent a response larger than ${cap} bytes, so it was not read. Ask for a smaller page (pageSize) or narrower filters, or raise maxResponseBytes.`,
+      statusCode,
+      undefined,
+    );
   }
 }

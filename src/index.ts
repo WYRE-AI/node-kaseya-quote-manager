@@ -8,4 +8,6 @@ export {
   RateLimitError,
   ServerError,
   ValidationError,
+  InvalidIdError,
+  ResponseTooLargeError,
 } from './errors.js';

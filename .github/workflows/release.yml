@@ -1,11 +1,8 @@
 name: Release
 
+# Release is manual-only: run it from the Actions tab after Aaron approves a publish.
 on:
-  push:
-    branches:
-      - main
-      - develop
-      - alpha
+  workflow_dispatch:
 
 permissions:
   contents: write

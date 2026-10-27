@@ -1,4 +1,4 @@
-import type { HttpClient } from '../http.js';
+import { pathId, type HttpClient } from '../http.js';
 import type { QuoteLineModel, QuoteLineListParams } from '../types/index.js';
 
 export class QuoteLineResource {
@@ -11,6 +11,6 @@ export class QuoteLineResource {
 
   /** Get a single QuoteLine by ID. */
   async get(id: number): Promise<QuoteLineModel> {
-    return this.http.request<QuoteLineModel>(`/v1/quoteline/${id}`);
+    return this.http.request<QuoteLineModel>(`/v1/quoteline/${pathId(id)}`);
   }
 }

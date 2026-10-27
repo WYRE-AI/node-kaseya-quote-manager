@@ -1,4 +1,4 @@
-import type { HttpClient } from '../http.js';
+import { pathId, type HttpClient } from '../http.js';
 import type { SalesOrderModel, SalesOrderListParams } from '../types/index.js';
 
 export class SalesOrderResource {
@@ -11,6 +11,6 @@ export class SalesOrderResource {
 
   /** Get a single SalesOrder by ID. */
   async get(id: number): Promise<SalesOrderModel> {
-    return this.http.request<SalesOrderModel>(`/v1/salesorder/${id}`);
+    return this.http.request<SalesOrderModel>(`/v1/salesorder/${pathId(id)}`);
   }
 }

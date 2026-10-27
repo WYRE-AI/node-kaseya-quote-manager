@@ -52,6 +52,8 @@ export class KaseyaQuoteManagerClient {
       apiKey: config.apiKey,
       maxRetries: config.maxRetries ?? 3,
       rateLimiter,
+      maxResponseBytes: config.maxResponseBytes,
+      timeoutMs: config.timeoutMs,
     });
 
     this.brands = new BrandResource(http);

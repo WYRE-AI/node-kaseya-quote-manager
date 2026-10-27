@@ -1,4 +1,4 @@
-import type { HttpClient } from '../http.js';
+import { pathId, type HttpClient } from '../http.js';
 import type { WarehouseModel, WarehouseListParams } from '../types/index.js';
 
 export class WarehouseResource {
@@ -11,6 +11,6 @@ export class WarehouseResource {
 
   /** Get a single Warehouse by ID. */
   async get(id: number): Promise<WarehouseModel> {
-    return this.http.request<WarehouseModel>(`/v1/warehouse/${id}`);
+    return this.http.request<WarehouseModel>(`/v1/warehouse/${pathId(id)}`);
   }
 }

@@ -1,4 +1,4 @@
-import type { HttpClient } from '../http.js';
+import { pathId, type HttpClient } from '../http.js';
 import type { SalesOrderLineModel, SalesOrderLineListParams } from '../types/index.js';
 
 export class SalesOrderLineResource {
@@ -11,6 +11,6 @@ export class SalesOrderLineResource {
 
   /** Get a single SalesOrderLine by ID. */
   async get(id: number): Promise<SalesOrderLineModel> {
-    return this.http.request<SalesOrderLineModel>(`/v1/salesorderline/${id}`);
+    return this.http.request<SalesOrderLineModel>(`/v1/salesorderline/${pathId(id)}`);
   }
 }

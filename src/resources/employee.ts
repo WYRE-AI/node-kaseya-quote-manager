@@ -1,4 +1,4 @@
-import type { HttpClient } from '../http.js';
+import { pathId, type HttpClient } from '../http.js';
 import type { EmployeeModel, EmployeeListParams } from '../types/index.js';
 
 export class EmployeeResource {
@@ -11,6 +11,6 @@ export class EmployeeResource {
 
   /** Get a single Employee by ID. */
   async get(id: number): Promise<EmployeeModel> {
-    return this.http.request<EmployeeModel>(`/v1/employee/${id}`);
+    return this.http.request<EmployeeModel>(`/v1/employee/${pathId(id)}`);
   }
 }

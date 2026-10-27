@@ -6,10 +6,14 @@ export interface KaseyaQuoteManagerClientConfig {
   apiKey: string;
   /** API base URL. Defaults to https://api.kaseyaquotemanager.com */
   baseUrl?: string;
-  /** Max automatic retries on 429/5xx. Default 3. */
+  /** Max automatic retries (GET only) on 429/5xx/network errors. Default 3. */
   maxRetries?: number;
   /** Client-side rate limit (requests/minute). Default 60 (API hard limit). */
   rateLimitPerMinute?: number;
+  /** Max response body size in bytes; larger responses are not read. Default 10 MiB. */
+  maxResponseBytes?: number;
+  /** Per-attempt request timeout in milliseconds. Default 30000. */
+  timeoutMs?: number;
 }
 
 /** Common pagination params. Max pageSize is 100. */
