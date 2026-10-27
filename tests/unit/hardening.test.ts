@@ -151,22 +151,28 @@ describe('pathId', () => {
 });
 
 describe('retries', () => {
-  it.each([
+  const failures: Array<[string, () => Response]> = [
     ['500', () => new HttpResponse('boom', { status: 500 })],
     ['429', () => new HttpResponse('slow', { status: 429, headers: { 'Retry-After': '1' } })],
     ['network error', () => HttpResponse.error()],
-  ])('does not retry POST on %s', async (_name, respond) => {
+  ];
+  const writes = (['POST', 'PUT', 'PATCH', 'DELETE'] as const).flatMap((method) =>
+    failures.map(([name, respond]) => [method, name, respond] as const),
+  );
+
+  it.each(writes)('does not retry %s on %s', async (method, _name, respond) => {
     let count = 0;
+    const handler = { POST: http.post, PUT: http.put, PATCH: http.patch, DELETE: http.delete }[method];
     server.use(
-      http.post(`${BASE}/v1/quote`, () => {
+      handler(`${BASE}/v1/quote`, () => {
         count++;
         return respond();
       }),
     );
     const { client, sleep } = makeHttp({ maxRetries: 3 });
-    await expect(client.request('/v1/quote', { method: 'POST', body: { a: 1 } })).rejects.toBeInstanceOf(
-      KaseyaQuoteManagerError,
-    );
+    await expect(
+      client.request('/v1/quote', { method, ...(method === 'DELETE' ? {} : { body: { a: 1 } }) }),
+    ).rejects.toBeInstanceOf(KaseyaQuoteManagerError);
     expect(count).toBe(1);
     expect(sleep).not.toHaveBeenCalled();
   });
