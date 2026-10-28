@@ -1,4 +1,4 @@
-import type { HttpClient } from '../http.js';
+import { pathId, type HttpClient } from '../http.js';
 import type { CustomerAddressModel, CustomerAddressListParams } from '../types/index.js';
 
 export class CustomerAddressResource {
@@ -10,7 +10,7 @@ export class CustomerAddressResource {
   }
 
   /** Get a single CustomerAddress by ID. */
-  async get(id: number): Promise<CustomerAddressModel> {
-    return this.http.request<CustomerAddressModel>(`/v1/customeraddress/${id}`);
+  async get(id: number | string): Promise<CustomerAddressModel> {
+    return this.http.request<CustomerAddressModel>(`/v1/customeraddress/${pathId(id)}`);
   }
 }

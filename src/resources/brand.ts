@@ -1,4 +1,4 @@
-import type { HttpClient } from '../http.js';
+import { pathId, type HttpClient } from '../http.js';
 import type { BrandModel, BrandListParams } from '../types/index.js';
 
 export class BrandResource {
@@ -10,7 +10,7 @@ export class BrandResource {
   }
 
   /** Get a single Brand by ID. */
-  async get(id: number): Promise<BrandModel> {
-    return this.http.request<BrandModel>(`/v1/brand/${id}`);
+  async get(id: number | string): Promise<BrandModel> {
+    return this.http.request<BrandModel>(`/v1/brand/${pathId(id)}`);
   }
 }

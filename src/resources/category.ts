@@ -1,4 +1,4 @@
-import type { HttpClient } from '../http.js';
+import { pathId, type HttpClient } from '../http.js';
 import type { CategoryModel, CategoryListParams } from '../types/index.js';
 
 export class CategoryResource {
@@ -10,7 +10,7 @@ export class CategoryResource {
   }
 
   /** Get a single Category by ID. */
-  async get(id: number): Promise<CategoryModel> {
-    return this.http.request<CategoryModel>(`/v1/category/${id}`);
+  async get(id: number | string): Promise<CategoryModel> {
+    return this.http.request<CategoryModel>(`/v1/category/${pathId(id)}`);
   }
 }

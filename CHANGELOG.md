@@ -35,6 +35,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+### Changed
+
+- **Release workflow needs a typed confirmation.** The manual Release workflow has a required `confirm_release` input; the release job only runs on `main` when it is exactly `publish-kqm-sdk`.
+- **`maxResponseBytes` and `timeoutMs` are validated.** `undefined` uses the default; `NaN`, `0`, negatives, `Infinity` and non-numbers throw a `RangeError` naming the option. This applies to values passed to `KaseyaQuoteManagerClient` too.
+- **`get(id)` accepts `number | string`** on every resource. Strings must be digits only; the positive safe integer check is unchanged.
+
 ### Added
 
 - **Release workflow no longer persists a write-scoped git credential across `npm ci`.** The release job declares `contents: write`, which overrides this repo's read-only default workflow permission, so `actions/checkout`'s default persisted credential was write-scoped and lived in `.git/config` through dependency install, build and test — readable by any compromised dependency lifecycle script. `persist-credentials: false` is semantic-release's own documented GitHub Actions recipe; it authenticates its pushes from `GITHUB_TOKEN` directly and never needed the persisted credential. (CWE-250, flagged by CodeRabbit.)

@@ -1,4 +1,4 @@
-import type { HttpClient } from '../http.js';
+import { pathId, type HttpClient } from '../http.js';
 import type { SalesOrderPaymentModel, SalesOrderPaymentListParams } from '../types/index.js';
 
 export class SalesOrderPaymentResource {
@@ -10,7 +10,7 @@ export class SalesOrderPaymentResource {
   }
 
   /** Get a single SalesOrderPayment by ID. */
-  async get(id: number): Promise<SalesOrderPaymentModel> {
-    return this.http.request<SalesOrderPaymentModel>(`/v1/salesorderpayment/${id}`);
+  async get(id: number | string): Promise<SalesOrderPaymentModel> {
+    return this.http.request<SalesOrderPaymentModel>(`/v1/salesorderpayment/${pathId(id)}`);
   }
 }

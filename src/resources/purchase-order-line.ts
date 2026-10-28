@@ -1,4 +1,4 @@
-import type { HttpClient } from '../http.js';
+import { pathId, type HttpClient } from '../http.js';
 import type { PurchaseOrderLineModel, PurchaseOrderLineListParams } from '../types/index.js';
 
 export class PurchaseOrderLineResource {
@@ -10,7 +10,7 @@ export class PurchaseOrderLineResource {
   }
 
   /** Get a single PurchaseOrderLine by ID. */
-  async get(id: number): Promise<PurchaseOrderLineModel> {
-    return this.http.request<PurchaseOrderLineModel>(`/v1/purchaseorderline/${id}`);
+  async get(id: number | string): Promise<PurchaseOrderLineModel> {
+    return this.http.request<PurchaseOrderLineModel>(`/v1/purchaseorderline/${pathId(id)}`);
   }
 }

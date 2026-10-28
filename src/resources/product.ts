@@ -1,4 +1,4 @@
-import type { HttpClient } from '../http.js';
+import { pathId, type HttpClient } from '../http.js';
 import type { ProductModel, ProductListParams } from '../types/index.js';
 
 export class ProductResource {
@@ -10,7 +10,7 @@ export class ProductResource {
   }
 
   /** Get a single Product by ID. */
-  async get(id: number): Promise<ProductModel> {
-    return this.http.request<ProductModel>(`/v1/product/${id}`);
+  async get(id: number | string): Promise<ProductModel> {
+    return this.http.request<ProductModel>(`/v1/product/${pathId(id)}`);
   }
 }
