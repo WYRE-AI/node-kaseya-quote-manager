@@ -358,3 +358,103 @@ describe('redirects and malformed bodies', () => {
     await expect(client.request('/v1/quote')).resolves.toEqual({});
   });
 });
+
+describe('maxResponseBytes / timeoutMs validation', () => {
+  const bad: [string, unknown][] = [
+    ['NaN', NaN],
+    ['0', 0],
+    ['-1', -1],
+    ['Infinity', Infinity],
+    ['-Infinity', -Infinity],
+    ['a string', '10'],
+    ['null', null],
+  ];
+
+  for (const option of ['maxResponseBytes', 'timeoutMs'] as const) {
+    for (const [label, value] of bad) {
+      it(`HttpClient rejects ${option}=${label}`, () => {
+        expect(() => makeHttp({ [option]: value as number })).toThrow(
+          `${option} must be a finite number greater than 0`,
+        );
+      });
+
+      it(`KaseyaQuoteManagerClient rejects ${option}=${label}`, () => {
+        expect(() => new KaseyaQuoteManagerClient({ apiKey: 'k', [option]: value as number })).toThrow(
+          RangeError,
+        );
+        expect(() => new KaseyaQuoteManagerClient({ apiKey: 'k', [option]: value as number })).toThrow(
+          `${option} must be a finite number greater than 0`,
+        );
+      });
+    }
+
+    it(`accepts a positive finite ${option}`, () => {
+      expect(() => makeHttp({ [option]: 5 })).not.toThrow();
+      expect(() => new KaseyaQuoteManagerClient({ apiKey: 'k', [option]: 5 })).not.toThrow();
+    });
+  }
+
+  it('uses the defaults when both options are undefined', async () => {
+    server.use(
+      http.get(`${BASE}/v1/quote`, () => HttpResponse.json([{ quoteID: 1 }])),
+    );
+    const client = new KaseyaQuoteManagerClient({ apiKey: 'k', maxResponseBytes: undefined, timeoutMs: undefined });
+    await expect(client.quotes.list()).resolves.toEqual([{ quoteID: 1 }]);
+    const { client: raw } = makeHttp();
+    await expect(raw.request('/v1/quote')).resolves.toEqual([{ quoteID: 1 }]);
+    expect((raw as any).maxResponseBytes).toBe(10 * 1024 * 1024);
+    expect((raw as any).timeoutMs).toBe(30_000);
+  });
+});
+
+describe('get(id) accepts number or digit string', () => {
+  const resources = [
+    ['quotes', 'quote'],
+    ['quoteSections', 'quotesection'],
+    ['quoteLines', 'quoteline'],
+    ['salesOrders', 'salesorder'],
+    ['salesOrderLines', 'salesorderline'],
+    ['salesOrderPayments', 'salesorderpayment'],
+    ['purchaseOrders', 'purchaseorder'],
+    ['purchaseOrderLines', 'purchaseorderline'],
+    ['purchaseOrderCosts', 'purchaseordercost'],
+    ['suppliers', 'supplier'],
+    ['productSuppliers', 'productsupplier'],
+    ['products', 'product'],
+    ['categories', 'category'],
+    ['brands', 'brand'],
+    ['customers', 'customer'],
+    ['customerAddress', 'customeraddress'],
+    ['contacts', 'contact'],
+    ['employees', 'employee'],
+    ['warehouses', 'warehouse'],
+  ] as const;
+
+  for (const [accessor, path] of resources) {
+    it(`${accessor}.get('42') requests /v1/${path}/42`, async () => {
+      const urls: string[] = [];
+      server.use(
+        http.get(`${BASE}/v1/${path}/:id`, ({ request }) => {
+          urls.push(new URL(request.url).pathname);
+          return HttpResponse.json({ id: 42 });
+        }),
+      );
+      const client = new KaseyaQuoteManagerClient({ apiKey: 'k' });
+      const res = client[accessor];
+      await res.get('42');
+      await res.get(42);
+      expect(urls).toEqual([`/v1/${path}/42`, `/v1/${path}/42`]);
+    });
+
+    it(`${accessor}.get rejects bad ids without a request`, async () => {
+      let count = 0;
+      server.use(http.get(`${BASE}/v1/${path}/:id`, () => { count++; return HttpResponse.json({}); }));
+      const client = new KaseyaQuoteManagerClient({ apiKey: 'k' });
+      for (const bad of ['abc', '0', '-1', '1.5', ' 1']) {
+        await expect(client[accessor].get(bad)).rejects.toBeInstanceOf(InvalidIdError);
+      }
+      expect(count).toBe(0);
+    });
+  }
+  // Parameter types are checked at compile time in tests/types/get-id.test-d.ts (npm run lint).
+});

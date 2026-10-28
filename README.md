@@ -42,7 +42,8 @@ Generate one in Quote Manager under **Settings → API**. The base URL is
 
 ## Resources
 
-Every resource supports `.list(params?)`; all except `productImages` also support `.get(id)`.
+Every resource supports `.list(params?)`; all except `productImages` also support `.get(id)`. `get(id)` accepts a number or a digit string
+(`get(42)` and `get('42')` are the same call).
 
 | Accessor | Resource | List filters (beyond `page`/`pageSize`/`modifiedAfter`) |
 |----------|----------|---------------------------------------------------------|
@@ -97,6 +98,9 @@ Other options:
 | `maxResponseBytes` | `10485760` (10 MiB) | Responses are read as a stream and abandoned once they pass this size. Throws `ResponseTooLargeError`. |
 | `timeoutMs` | `30000` | Per-attempt request timeout. A timeout counts as a network error (and is retried like one). |
 
+Both options must be a finite number greater than 0, or left unset. Anything else (`NaN`, `0`, a negative
+number, `Infinity`, a non-number) makes the constructor throw a `RangeError` naming the option.
+
 ## Error handling
 
 All errors extend `KaseyaQuoteManagerError` (`statusCode`, `response`):
@@ -128,6 +132,12 @@ Also:
 - Redirects are never followed (following one would resend the `apiKey` header to another host). A `3xx` throws.
 
 For error responses, the (size-capped) body is available on `.response`.
+
+## Releasing
+
+Releases are manual. Run the **Release** workflow from the Actions tab on `main` and type
+`publish-kqm-sdk` in the `confirm_release` input. With any other value, or on another branch,
+the release job is skipped.
 
 ## License
 

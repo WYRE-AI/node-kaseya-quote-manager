@@ -10,7 +10,7 @@ export class BrandResource {
   }
 
   /** Get a single Brand by ID. */
-  async get(id: number): Promise<BrandModel> {
+  async get(id: number | string): Promise<BrandModel> {
     return this.http.request<BrandModel>(`/v1/brand/${pathId(id)}`);
   }
 }

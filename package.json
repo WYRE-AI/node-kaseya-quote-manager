@@ -28,7 +28,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:coverage": "vitest run --coverage",
-    "lint": "tsc --noEmit",
+    "lint": "tsc --noEmit && tsc -p tsconfig.typetest.json",
     "clean": "rm -rf dist",
     "prepare": "npm run build"
   },

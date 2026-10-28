@@ -55,6 +55,14 @@ export function pathId(id: unknown): string {
   throw new InvalidIdError();
 }
 
+function positiveOption(name: string, value: unknown, fallback: number): number {
+  if (value === undefined) return fallback;
+  if (typeof value !== 'number' || !Number.isFinite(value) || value <= 0) {
+    throw new RangeError(`${name} must be a finite number greater than 0`);
+  }
+  return value;
+}
+
 export class HttpClient {
   private readonly baseUrl: string;
   private readonly apiKey: string;
@@ -70,8 +78,8 @@ export class HttpClient {
     this.apiKey = config.apiKey;
     this.maxRetries = config.maxRetries;
     this.rateLimiter = config.rateLimiter;
-    this.maxResponseBytes = config.maxResponseBytes ?? DEFAULT_MAX_RESPONSE_BYTES;
-    this.timeoutMs = config.timeoutMs ?? DEFAULT_TIMEOUT_MS;
+    this.maxResponseBytes = positiveOption('maxResponseBytes', config.maxResponseBytes, DEFAULT_MAX_RESPONSE_BYTES);
+    this.timeoutMs = positiveOption('timeoutMs', config.timeoutMs, DEFAULT_TIMEOUT_MS);
     this.sleep = config.sleep ?? defaultSleep;
   }
 

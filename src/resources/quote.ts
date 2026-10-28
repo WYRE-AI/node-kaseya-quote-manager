@@ -10,7 +10,7 @@ export class QuoteResource {
   }
 
   /** Get a single Quote by ID. */
-  async get(id: number): Promise<QuoteModel> {
+  async get(id: number | string): Promise<QuoteModel> {
     return this.http.request<QuoteModel>(`/v1/quote/${pathId(id)}`);
   }
 }

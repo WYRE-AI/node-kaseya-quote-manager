@@ -10,7 +10,7 @@ export class SalesOrderLineResource {
   }
 
   /** Get a single SalesOrderLine by ID. */
-  async get(id: number): Promise<SalesOrderLineModel> {
+  async get(id: number | string): Promise<SalesOrderLineModel> {
     return this.http.request<SalesOrderLineModel>(`/v1/salesorderline/${pathId(id)}`);
   }
 }

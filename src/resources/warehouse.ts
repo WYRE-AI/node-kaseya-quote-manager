@@ -10,7 +10,7 @@ export class WarehouseResource {
   }
 
   /** Get a single Warehouse by ID. */
-  async get(id: number): Promise<WarehouseModel> {
+  async get(id: number | string): Promise<WarehouseModel> {
     return this.http.request<WarehouseModel>(`/v1/warehouse/${pathId(id)}`);
   }
 }

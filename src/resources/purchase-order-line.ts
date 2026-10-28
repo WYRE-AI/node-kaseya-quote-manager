@@ -10,7 +10,7 @@ export class PurchaseOrderLineResource {
   }
 
   /** Get a single PurchaseOrderLine by ID. */
-  async get(id: number): Promise<PurchaseOrderLineModel> {
+  async get(id: number | string): Promise<PurchaseOrderLineModel> {
     return this.http.request<PurchaseOrderLineModel>(`/v1/purchaseorderline/${pathId(id)}`);
   }
 }

@@ -10,7 +10,7 @@ export class CategoryResource {
   }
 
   /** Get a single Category by ID. */
-  async get(id: number): Promise<CategoryModel> {
+  async get(id: number | string): Promise<CategoryModel> {
     return this.http.request<CategoryModel>(`/v1/category/${pathId(id)}`);
   }
 }

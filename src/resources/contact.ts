@@ -10,7 +10,7 @@ export class ContactResource {
   }
 
   /** Get a single Contact by ID. */
-  async get(id: number): Promise<ContactModel> {
+  async get(id: number | string): Promise<ContactModel> {
     return this.http.request<ContactModel>(`/v1/contact/${pathId(id)}`);
   }
 }

@@ -3,6 +3,11 @@ name: Release
 # Release is manual-only: run it from the Actions tab.
 on:
   workflow_dispatch:
+    inputs:
+      confirm_release:
+        description: 'Type publish-kqm-sdk to publish a release. Any other value skips the release job.'
+        required: true
+        type: string
 
 permissions:
   contents: write
@@ -45,7 +50,7 @@ jobs:
     name: Release
     needs: test
     runs-on: ubuntu-latest
-    if: github.ref == 'refs/heads/main'
+    if: github.ref == 'refs/heads/main' && inputs.confirm_release == 'publish-kqm-sdk'
 
     steps:
       - name: Checkout

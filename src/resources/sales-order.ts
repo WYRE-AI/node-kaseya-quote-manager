@@ -10,7 +10,7 @@ export class SalesOrderResource {
   }
 
   /** Get a single SalesOrder by ID. */
-  async get(id: number): Promise<SalesOrderModel> {
+  async get(id: number | string): Promise<SalesOrderModel> {
     return this.http.request<SalesOrderModel>(`/v1/salesorder/${pathId(id)}`);
   }
 }

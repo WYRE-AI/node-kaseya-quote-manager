@@ -10,7 +10,7 @@ export class ProductResource {
   }
 
   /** Get a single Product by ID. */
-  async get(id: number): Promise<ProductModel> {
+  async get(id: number | string): Promise<ProductModel> {
     return this.http.request<ProductModel>(`/v1/product/${pathId(id)}`);
   }
 }

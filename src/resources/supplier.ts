@@ -10,7 +10,7 @@ export class SupplierResource {
   }
 
   /** Get a single Supplier by ID. */
-  async get(id: number): Promise<SupplierModel> {
+  async get(id: number | string): Promise<SupplierModel> {
     return this.http.request<SupplierModel>(`/v1/supplier/${pathId(id)}`);
   }
 }

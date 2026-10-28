@@ -10,7 +10,7 @@ export class CustomerResource {
   }
 
   /** Get a single Customer by ID. */
-  async get(id: number): Promise<CustomerModel> {
+  async get(id: number | string): Promise<CustomerModel> {
     return this.http.request<CustomerModel>(`/v1/customer/${pathId(id)}`);
   }
 }

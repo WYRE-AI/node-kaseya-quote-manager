@@ -10,7 +10,7 @@ export class EmployeeResource {
   }
 
   /** Get a single Employee by ID. */
-  async get(id: number): Promise<EmployeeModel> {
+  async get(id: number | string): Promise<EmployeeModel> {
     return this.http.request<EmployeeModel>(`/v1/employee/${pathId(id)}`);
   }
 }

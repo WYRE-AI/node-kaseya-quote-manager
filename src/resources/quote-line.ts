@@ -10,7 +10,7 @@ export class QuoteLineResource {
   }
 
   /** Get a single QuoteLine by ID. */
-  async get(id: number): Promise<QuoteLineModel> {
+  async get(id: number | string): Promise<QuoteLineModel> {
     return this.http.request<QuoteLineModel>(`/v1/quoteline/${pathId(id)}`);
   }
 }

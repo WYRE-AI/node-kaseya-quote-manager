@@ -10,7 +10,7 @@ export class PurchaseOrderCostResource {
   }
 
   /** Get a single PurchaseOrderCost by ID. */
-  async get(id: number): Promise<PurchaseOrderCostModel> {
+  async get(id: number | string): Promise<PurchaseOrderCostModel> {
     return this.http.request<PurchaseOrderCostModel>(`/v1/purchaseordercost/${pathId(id)}`);
   }
 }
